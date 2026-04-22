@@ -1,0 +1,69 @@
+# 🏭 Metodologia PMI - Aula Interativa
+
+> Plataforma interativa de debates e votações para ensino de Gestão de Projetos e Processos baseado na Metodologia PMI
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+---
+
+## 📋 Sobre o Projeto
+
+Ferramenta educacional desenvolvida para turmas do **Curso Técnico em Planejamento e Controle de Produção (PCP)**, especificamente para a disciplina de **Gestão de Projetos e Processos** com foco na **Metodologia PMI (Project Management Institute)**.
+
+A plataforma apresenta **8 casos práticos reais** da indústria, estimulando debates sobre dilemas gerenciais baseados nas áreas de conhecimento do PMBOK.
+
+### 🎯 Objetivos Pedagógicos
+
+- Estimular pensamento crítico sobre gestão de projetos
+- Promover debates fundamentados em cenários reais
+- Aplicar conceitos do PMI/PMBOK em contextos práticos
+- Desenvolver habilidades de tomada de decisão
+- Visualizar posicionamentos da turma em tempo real
+
+---
+
+## ✨ Funcionalidades
+
+### 🎮 Sistema Interativo de Casos
+
+- **8 Casos Práticos** cobrindo diferentes áreas do PMI:
+  - ⏱️ Gestão de Tempo vs. Qualidade
+  - 👥 Gestão de Stakeholders
+  - 📊 Controle de Escopo (Scope Creep)
+  - ⚠️ Gestão de Riscos
+  - 🛒 Gerenciamento de Aquisições (Make or Buy)
+  - 🌱 Responsabilidade Social vs. Viabilidade
+  - 🤝 Gestão de Conflitos em Equipes
+  - 🤖 Gestão de Recursos Humanos (Indústria 4.0)
+
+### 📊 Sistema de Votação em Tempo Real
+
+- Votação anônima para cada dilema
+- Gráficos de barras animados
+- Atualização instantânea dos resultados
+- Percentuais automáticos por opção
+
+### ⏱️ Timer de Debate Configurável
+
+- Cronômetro personalizável (1-60 minutos)
+- Controles: Iniciar, Pausar, Resetar
+- Alerta sonoro ao fim do tempo
+- Display digital estilo LED
+
+### 🎨 Design Moderno e Responsivo
+
+- Tema dark mode industrial
+- Paleta laranja (#F97316) + cinza escuro
+- Animações suaves e transições
+- Totalmente responsivo (desktop, tablet, mobile)
+- Cards expansíveis com hover effects
+
+---
+
+## 🚀 Como Usar
+
+### 1️⃣ Download
+
+```bash

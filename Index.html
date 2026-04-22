@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodologia PMI - Aula Interativa | PCP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .timer-section {
+            background: #2a2a2a;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #f97316;
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #f97316;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-start {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-start:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-pause {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-pause:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .timer-input {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 2px solid #f97316;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            width: 150px;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .case-card {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #3a3a3a;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .case-card:hover {
+            border-color: #f97316;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.2);
+        }
+
+        .case-number {
+            display: inline-block;
+            background: #f97316;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .case-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #f97316;
+        }
+
+        .case-context {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #b0b0b0;
+        }
+
+        .case-dilemma {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #f97316;
+        }
+
+        .case-questions {
+            margin-top: 15px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .case-card.expanded .case-questions {
+            max-height: 2000px;
+            opacity: 1;
+            margin-top: 20px;
+        }
+
+        .question {
+            background: #333;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #f97316;
+        }
+
+        .vote-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #3a3a3a;
+        }
+
+        .vote-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .vote-btn {
+            padding: 15px;
+            border: 2px solid #f97316;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .vote-btn:hover {
+            background: #f97316;
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .vote-btn:active {
+            transform: scale(0.98);
+        }
+
+        .vote-label {
+            display: block;
+            color: #f97316;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .vote-btn:hover .vote-label {
+            color: white;
+        }
+
+        .vote-count {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .expand-hint {
+            text-align: center;
+            margin-top: 15px;
+            color: #f97316;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .results-section {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #f97316;
+        }
+
+        .results-title {
+            font-size: 2em;
+            color: #f97316;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .result-item {
+            margin-bottom: 25px;
+        }
+
+        .result-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .result-bar {
+            background: #1a1a1a;
+            height: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .result-fill {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .timer-display {
+                font-size: 2.5em;
+            }
+
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏭 Metodologia PMI em Ação</h1>
+            <p class="subtitle">Gestão de Projetos e Processos | Técnico em PCP</p>
+        </header>
+
+        <div class="timer-section">
+            <h2>⏱️ Timer de Debate</h2>
+            <div class="timer-display" id="timerDisplay">05:00</div>
+            <div class="timer-controls">
+                <input type="number" id="timerMinutes" class="timer-input" value="5" min="1" max="60" placeholder="Minutos">
+                <button class="btn btn-start" onclick="startTimer()">▶️ Iniciar</button>
+                <button class="btn btn-pause" onclick="pauseTimer()">⏸️ Pausar</button>
+                <button class="btn btn-reset" onclick="resetTimer()">🔄 Resetar</button>
+            </div>
+        </div>
+
+        <div class="cases-grid" id="casesGrid"></div>
+
+        <div class="results-section">
+            <h2 class="results-title">📊 Resultados da Votação</h2>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const cases = [
+            {
+                id: 1,
+                title: "O Dilema do Prazo Impossível",
+                context: "A MetalPro recebeu um pedido urgente de 5.000 peças para um cliente importante. O prazo normal seria 45 dias, mas o cliente precisa em 25 dias e oferece 30% a mais no valor. A equipe de produção diz que é possível, mas precisará fazer horas extras intensas e pular algumas etapas de controle de qualidade.",
+                dilemma: "Aceitar o projeto com prazo apertado e risco de qualidade OU recusar e perder o cliente estratégico?",
+                opcao1: "Aceitar o projeto (prazo apertado + risco na qualidade)",
+                opcao2: "Recusar o projeto (perder cliente estratégico)",
+                questions: [
+                    "Quais áreas de conhecimento do PMI estão em conflito aqui?",
+                    "Como o gerente de projetos deve balancear o Triângulo de Restrições (escopo, tempo, custo)?",
+                    "Que riscos devem ser mapeados antes de aceitar?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 2,
+                title: "A Guerra dos Stakeholders",
+                context: "Você é GP de um projeto de implantação de um novo sistema MRP. O diretor comercial quer funcionalidades extras de CRM integrado (fora do escopo original). O diretor industrial quer cortar custos e entregar apenas o básico. O TI alerta que mudanças agora atrasarão 2 meses.",
+                dilemma: "Expandir o escopo atendendo Comercial OU manter o plano original atendendo Industrial?",
+                opcao1: "Expandir escopo (atender Comercial + atraso de 2 meses)",
+                opcao2: "Manter plano original (entregar apenas o básico)",
+                questions: [
+                    "Como gerenciar stakeholders com interesses conflitantes?",
+                    "O que fazer quando mudanças de escopo aparecem no meio do projeto?",
+                    "Como a comunicação pode resolver (ou piorar) esse conflito?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 3,
+                title: "O Escopo que Não Para de Crescer",
+                context: "Projeto: desenvolvimento de um novo produto (cadeira ergonômica). Nas 3 últimas reuniões, o cliente pediu: ajuste no design, novo material, certificação extra e mudança na embalagem. Cada mudança parece pequena, mas já estamos 40% acima do orçamento inicial.",
+                dilemma: "Continuar aceitando mudanças para agradar o cliente OU impor controle rígido de mudanças?",
+                opcao1: "Continuar aceitando mudanças (cliente feliz + estouro no orçamento)",
+                opcao2: "Impor controle rígido (possível insatisfação do cliente)",
+                questions: [
+                    "O que é 'scope creep' e como evitar?",
+                    "Qual processo do PMI controla mudanças de escopo?",
+                    "Como dizer 'não' para um cliente sem perder o relacionamento?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 4,
+                title: "O Risco que Ninguém Previu",
+                context: "Projeto de expansão da fábrica estava 70% concluído quando uma nova lei ambiental exigiu instalação de um sistema de tratamento de efluentes não previsto. Custo extra: R$ 300 mil. Atraso: 60 dias. O orçamento de contingência já foi usado em outros imprevistos.",
+                dilemma: "Parar o projeto até conseguir verba OU continuar e estourar o orçamento?",
+                opcao1: "Parar projeto (esperar verba + paralisação de 60+ dias)",
+                opcao2: "Continuar (estourar orçamento + entregar no prazo)",
+                questions: [
+                    "Esse risco era previsível? Como poderia ter sido identificado?",
+                    "Qual a diferença entre riscos conhecidos e desconhecidos?",
+                    "Como o plano de gerenciamento de riscos poderia ter ajudado?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 5,
+                title: "Fazer ou Comprar? Eis a Questão",
+                context: "A AutoPeças precisa decidir sobre componentes eletrônicos para um novo produto. Opção A: desenvolver internamente (investimento de R$ 500 mil, prazo 8 meses, total controle). Opção B: terceirizar com fornecedor chinês (R$ 150 mil, prazo 3 meses, dependência externa).",
+                dilemma: "Fazer internamente (caro e demorado) OU comprar pronto (rápido mas arriscado)?",
+                opcao1: "Fazer internamente (R$ 500k + 8 meses + controle total)",
+                opcao2: "Comprar de fornecedor (R$ 150k + 3 meses + dependência)",
+                questions: [
+                    "Quais critérios usar na decisão make or buy?",
+                    "Como avaliar riscos de fornecedores externos?",
+                    "O que o PMI diz sobre gerenciamento de aquisições?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 6,
+                title: "Projeto Verde ou Projeto Viável?",
+                context: "Projeto de nova linha de produção. A diretoria quer certificação ambiental (ISO 14001) e equipamentos sustentáveis. Isso aumenta custos em 25% e prazo em 3 meses. O controller financeiro questiona se o mercado pagará mais por 'produto verde'.",
+                dilemma: "Investir em sustentabilidade (custo maior) OU focar em viabilidade econômica?",
+                opcao1: "Investir em sustentabilidade (+25% custo + 3 meses)",
+                opcao2: "Focar em viabilidade econômica (custo menor + mais rápido)",
+                questions: [
+                    "Como balancear responsabilidade social e resultado financeiro?",
+                    "Sustentabilidade deve ser tratada como requisito ou como diferencial?",
+                    "Como justificar investimentos 'não técnicos' em um projeto?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 7,
+                title: "A Equipe Dividida",
+                context: "Projeto multidisciplinar: engenharia quer perfeição técnica (mais tempo), produção quer simplicidade (menos custo), qualidade quer testes rigorosos (mais prazo). As reuniões viraram debates acalorados e o projeto está parado há 2 semanas.",
+                dilemma: "Impor uma decisão de cima para baixo OU buscar consenso da equipe?",
+                opcao1: "Impor decisão (rápido + possível resistência da equipe)",
+                opcao2: "Buscar consenso (demorado + engajamento da equipe)",
+                questions: [
+                    "Como o GP deve mediar conflitos técnicos?",
+                    "Qual o papel da comunicação em equipes multidisciplinares?",
+                    "Quando aceitar conflitos e quando cortá-los?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            },
+            {
+                id: 8,
+                title: "A Indústria 4.0 Chegou (e Ninguém Sabe Usar)",
+                context: "Projeto: implantação de sistema IoT e sensores inteligentes na linha de produção. A tecnologia é promissora, mas a equipe atual não tem capacitação. Opções: treinar equipe atual (3 meses, custo médio) OU contratar especialistas externos (rápido, custo alto, dependência).",
+                dilemma: "Capacitar equipe interna OU contratar conhecimento externo?",
+                opcao1: "Treinar equipe atual (3 meses + custo médio + autonomia)",
+                opcao2: "Contratar externos (rápido + custo alto + dependência)",
+                questions: [
+                    "Como gerenciar projetos com tecnologias que a equipe não domina?",
+                    "Treinamento é investimento ou custo no projeto?",
+                    "O que o PMI diz sobre desenvolvimento da equipe?"
+                ],
+                votes: { opcao1: 0, opcao2: 0 }
+            }
+        ];
+
+        let timerInterval;
+        let timeLeft;
+
+        function renderCases() {
+            const grid = document.getElementById('casesGrid');
+            grid.innerHTML = cases.map(c => `
+                <div class="case-card" id="card-${c.id}">
+                    <span class="case-number">Caso ${c.id}</span>
+                    <h3 class="case-title">${c.title}</h3>
+                    <p class="case-context">${c.context}</p>
+                    <div class="case-dilemma">
+                        <strong>🤔 Dilema:</strong> ${c.dilemma}
+                    </div>
+                    <div class="expand-hint">👆 Clique para ver questões e votar</div>
+                    <div class="case-questions">
+                        <strong>💭 Questões para debate:</strong>
+                        ${c.questions.map(q => `<div class="question">• ${q}</div>`).join('')}
+                        <div class="vote-section">
+                            <strong>📊 Qual decisão você tomaria?</strong>
+                            <div class="vote-buttons">
+                                <button class="vote-btn" onclick="vote(${c.id}, 'opcao1', event)">
+                                    <span class="vote-label">OPÇÃO 1</span>
+                                    ${c.opcao1}
+                                </button>
+                                <button class="vote-btn" onclick="vote(${c.id}, 'opcao2', event)">
+                                    <span class="vote-label">OPÇÃO 2</span>
+                                    ${c.opcao2}
+                                </button>
+                            </div>
+                            <div class="vote-count">Total de votos: <span id="total-${c.id}">0</span></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Adicionar event listeners depois de renderizar
+            cases.forEach(c => {
+                document.getElementById(`card-${c.id}`).addEventListener('click', function(e) {
+                    // Não expandir se clicar nos botões de voto
+                    if (!e.target.classList.contains('vote-btn') && !e.target.closest('.vote-btn')) {
+                        this.classList.toggle('expanded');
+                    }
+                });
+            });
+        }
+
+        function vote(caseId, option, event) {
+            event.stopPropagation();
+            const caseObj = cases.find(c => c.id === caseId);
+            caseObj.votes[option]++;
+            updateResults();
+            document.getElementById(`total-${caseId}`).textContent = 
+                caseObj.votes.opcao1 + caseObj.votes.opcao2;
+        }
+
+        function updateResults() {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = cases.map(c => {
+                const total = c.votes.opcao1 + c.votes.opcao2;
+                const percent1 = total > 0 ? (c.votes.opcao1 / total * 100).toFixed(1) : 0;
+                const percent2 = total > 0 ? (c.votes.opcao2 / total * 100).toFixed(1) : 0;
+                
+                return `
+                    <div class="result-item">
+                        <div class="result-label">Caso ${c.id}: ${c.title}</div>
+                        <div style="margin-bottom: 10px;">
+                            <div style="margin-bottom: 5px;"><strong>Opção 1:</strong> ${c.opcao1} - ${c.votes.opcao1} votos</div>
+                            <div class="result-bar">
+                                <div class="result-fill" style="width: ${percent1}%">${percent1}%</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="margin-bottom: 5px;"><strong>Opção 2:</strong> ${c.opcao2} - ${c.votes.opcao2} votos</div>
+                            <div class="result-bar">
+                                <div class="result-fill" style="width: ${percent2}%">${percent2}%</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function startTimer() {
+            const minutes = parseInt(document.getElementById('timerMinutes').value) || 5;
+            if (!timerInterval) {
+                if (!timeLeft || timeLeft === 0) {
+                    timeLeft = minutes * 60;
+                }
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    if (timeLeft <= 0) {
+                        pauseTimer();
+                        alert('⏰ Tempo esgotado!');
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            const minutes = parseInt(document.getElementById('timerMinutes').value) || 5;
+            timeLeft = minutes * 60;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Inicialização
+        renderCases();
+        updateResults();
+        resetTimer();
+    </script>
+</body>
+</html>
